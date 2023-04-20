@@ -49,7 +49,6 @@ jobs:
           token: ${{ secrets.PAT_TOKEN }}
           fetch-depth: 0
 
-
       - name: Set up Node.js
         uses: actions/setup-node@v3
         with:
@@ -61,38 +60,12 @@ jobs:
           name: bundle
           path: .
 
-      - name: Build the image
-        run: |
-          docker build .
-
       - name: Link the semantic release config and release
         env:
+          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
-          GH_TOKEN: ${{ secrets.PAT_TOKEN }}
         run: |
           npm install @rimac-technology/semantic-release-ecr
           npx semantic-release
-
-
-#      # TODO Get credentials from  api.deployer i-love-automation.api.ci user
-#      - name: Configure AWS credentials
-#        uses: aws-actions/configure-aws-credentials@v2
-#        with:
-#          aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-#          aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-#          aws-region: "us-east-1"
-#
-#      - name: Login to Amazon ECR
-#        id: login-ecr
-#        uses: aws-actions/amazon-ecr-login@v1
-#
-#      - name: Build, tag, and push docker image to Amazon ECR
-#        env:
-#          REGISTRY: ${{ steps.login-ecr.outputs.registry }}
-#          REPOSITORY: 'i-love-automation'
-#          IMAGE_TAG: 'GET FROM SEMANTIC RELEASE'
-#        run: |
-#          docker build -t $REGISTRY/$REPOSITORY:$IMAGE_TAG .
-#          docker push $REGISTRY/$REPOSITORY:$IMAGE_TAG
