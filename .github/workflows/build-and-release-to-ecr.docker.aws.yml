@@ -19,6 +19,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 'lts/*'
+          cache: 'npm'
 
       - name: Install dependencies (prefer frozen)
         run: 'npm install'
@@ -52,6 +53,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 'lts/*'
+          cache: 'npm'
 
       - name: Download application build artifact
         uses: actions/download-artifact@v3
@@ -65,7 +67,7 @@ jobs:
 
       - name: Link the semantic release config and release
         env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          GITHUB_TOKEN: ${{ secrets.PAT_TOKEN }}
           AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_DEFAULT_REGION: ${{ secrets.AWS_DEFAULT_REGION }}
