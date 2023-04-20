@@ -1,3 +1,4 @@
+#
 name: Build and release the container to ECR.
 
 on:
@@ -69,3 +70,10 @@ jobs:
         run: |
           npm install @rimac-technology/semantic-release-ecr
           npx semantic-release
+
+      - name: Trigger infrastructure workflow to redeploy service
+        uses: peter-evans/repository-dispatch@v2
+        with:
+          token: ${{ secrets.PAT_TOKEN }}
+          repository: i-love-automation/api-infrastructure
+          event-type: remote-trigger
