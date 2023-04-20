@@ -45,6 +45,7 @@
       [
         "@rimac-technology/semantic-release-ecr",
         {
+          "buildImage": "docker build . -t i-love-automation",
           "imageName": "i-love-automation"
         }
       ]
