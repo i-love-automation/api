@@ -39,6 +39,7 @@
   },
   "release": {
     "branches": ["main"],
+    "repository": "https://github.com/i-love-automation/api.git"
     "plugins": [
       "@semantic-release/commit-analyzer",
       "@semantic-release/release-notes-generator",
