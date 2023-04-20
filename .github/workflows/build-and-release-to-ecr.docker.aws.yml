@@ -19,6 +19,7 @@ jobs:
         uses: actions/setup-node@v3
         with:
           node-version: 'lts/*'
+          cache: 'npm'
 
       - name: Install dependencies (prefer frozen)
         run: 'npm install'
@@ -43,8 +44,16 @@ jobs:
       - build-and-upload-application-bundle
 
     steps:
-      - name: Checkout repository
+      - name: Checkout repo with complete history
         uses: actions/checkout@v3
+        with:
+          fetch-depth: 0
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+          cache: 'npm'
 
       - name: Download application build artifact
         uses: actions/download-artifact@v3
@@ -52,7 +61,7 @@ jobs:
           name: bundle
           path: .
 
-      - name: Build, tag, and push docker image to Amazon ECR
+      - name: Build the image
         run: |
           docker build .
 
