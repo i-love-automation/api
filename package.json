@@ -45,8 +45,8 @@
       [
         "@rimac-technology/semantic-release-ecr",
         {
-          "buildImage": "docker build . -t SERVICE",
-          "imageName": "SERVICE"
+          "buildImage": "docker build . -t api",
+          "imageName": "api"
         }
       ]
     ]
