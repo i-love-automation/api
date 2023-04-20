@@ -9,13 +9,32 @@ on:
 jobs:
   # TODO Add standard application build/validate/release/run CI
   build-and-upload-application-bundle:
-    uses: romain-cambonie/serenity-workflows/.github/workflows/_build-and-upload-artifact.reusable.yml@master
-    with:
-      node-version: 'lts/*'
-      package-manager: 'npm'
-      package-manager-dependencies-command: 'npm install'
-      build-command: 'run build'
-      out-dir: 'build'
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 'lts/*'
+          cache: 'npm'
+
+      - name: Install dependencies (prefer frozen)
+        run: 'npm install'
+
+      - name: Build
+        run: 'run build'
+
+      - name: Upload build bundle as artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: ${{inputs.artifact-name}}
+          path: |
+            package.json
+            package-lock.json
+            ${{inputs.out-dir}}
 
 
   build-and-push-docker-image:
