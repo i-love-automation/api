@@ -29,11 +29,11 @@ jobs:
       - name: Upload build bundle as artifact
         uses: actions/upload-artifact@v3
         with:
-          name: ${{inputs.artifact-name}}
+          name: bundle
           path: |
             package.json
             package-lock.json
-            ${{inputs.out-dir}}
+            build
 
 
   build-and-push-docker-image:
