@@ -75,5 +75,5 @@ jobs:
         uses: peter-evans/repository-dispatch@v2
         with:
           token: ${{ secrets.PAT_TOKEN }}
-          repository: i-love-automation/api-infrastructure
+          repository: i-love-automation/registry-infrastructure
           event-type: remote-trigger
